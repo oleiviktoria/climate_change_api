@@ -3,6 +3,9 @@ const express = require('express')
 const axios = require('axios')
 const cheerio = require('cheerio')
 const app = express()
+const cors = require('cors')
+
+app.use(cors())
 
 const newspapers = [
     {
@@ -94,12 +97,13 @@ newspapers.forEach(newspaper => {
         })
 })
 
-app.get('/', (req, res) => {
-    res.json('Welcome to my Climate Change News API')
+app.get('/results', (req, res) => {
+    res.json(articles)
 })
 
-app.get('/news', (req, res) => {
-    res.json(articles)
+
+app.get('/', (req, res) => {
+    res.json('Welcome to my Climate Change News API')
 })
 
 app.get('/news/:newspaperId', (req, res) => {
@@ -127,4 +131,5 @@ app.get('/news/:newspaperId', (req, res) => {
     }).catch(err => console.log(err))
 })
 
-app.listen(PORT, () => console.log(PORT))
+
+app.listen(PORT)
